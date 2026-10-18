@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Siddarameshwara Shamiyana Suppliers</title>
+<style>
+
+</style>
+</head>
+<body>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Siddarameshwara Shamiyana Suppliers</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#fff8f0;color:#302522}
+header{background:#9f1239;color:white;text-align:center;padding:18px 10px}
+h1{font-size:25px;margin:5px}
+select,input,button,textarea{font:inherit;padding:10px;border-radius:8px;border:1px solid #ddd}
+button{cursor:pointer;background:#9f1239;color:white;border:0;font-weight:bold}
+main{padding:14px;max-width:750px;margin:auto}
+.panel{background:white;padding:14px;margin:14px 0;border-radius:12px;box-shadow:0 2px 8px #0001}
+.item{border-bottom:1px solid #eee;padding:12px 0}
+.itemname{font-weight:bold;margin-bottom:8px}
+.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.controls input{width:85px}
+.smallbtn{padding:7px 12px}
+.cartrow{border-bottom:1px solid #eee;padding:12px 0}
+.muted{color:#6b625e;font-size:14px}
+label{display:block;margin:12px 0 5px;font-weight:bold}
+form input,form select,form textarea{width:100%}
+.whatsapp{background:#168447;width:100%;padding:14px;margin-top:12px}
+</style>
+</head>
+
+<body>
+<header>
+<h1 id="shopTitle">Siddarameshwara Shamiyana Suppliers</h1>
+<p id="owner">Owner: Prakash G T</p>
+<p id="address">📍Bada, Davanagere, Karnataka</p>
+<p>📞 9036015099</p>        <p>         prajwal G P </p>
+<select id="lang" onchange="renderAll()" aria-label="Select language">
+<option value="en">English</option>
+<option value="kn">ಕನ್ನಡ</option>
+</select>
+</header>
+
+<main>
+<div class="panel">
+<h2 id="listTitle">Available Items</h2>
+<input id="search" placeholder="Search items..." oninput="renderItems()" style="width:95℅">
+<div id="items"></div>
+</div>
+
+<div class="panel">
+<h2>🛒 <span id="cartTitle">My Cart</span> (<span id="cartCount">0</span>)</h2>
+<div id="cart"></div>
+<button onclick="clearCart()" id="clearBtn">Clear Cart</button>
+</div>
+
+<div class="panel">
+<h2 id="bookingTitle">Booking Details</h2>
+
+<form id="bookingForm">
+<label id="nameLabel" for="name">Your name *</label>
+<input id="name" required>
+
+<label id="eventLabel" for="event">Function type *</label>
+<select id="event" required></select>
+
+<label id="dateLabel" for="date">Event date *</label>
+<input id="date" type="date" required>
+
+<label id="locationLabel" for="location">Event location *</label>
+<input id="location" required placeholder="Village / area / venue">
+
+<label id="phoneLabel" for="phone">Your phone number</label>
+<input id="phone" type="tel">
+
+<label id="extraLabel" for="extra">Other requirements</label>
+<textarea id="extra" rows="3" style="width:100%"></textarea>
+
+<button class="whatsapp" id="sendBtn" type="submit">
+Send Booking on WhatsApp
+</button>
+</form>
+
+<p class="muted" id="note">
+WhatsApp will open with your booking message. Review it and press Send.
+</p>
+</div>
+</main>
+
+<script>
+const shopWhatsApp = "919036015099";
+
+const products = [
+["Shamiyana (40 × 40)","ಶಾಮಿಯಾನ (40 × 40)"],
+["Shamiyana (20 × 40)","ಶಾಮಿಯಾನ (20 × 40)"],
+["Shamiyana (15 × 30)","ಶಾಮಿಯಾನ (15 × 30)"],
+["Shamiyana (12 × 24)","ಶಾಮಿಯಾನ (12 × 24)"],
+["Steel Table","ಸ್ಟೀಲ್ ಟೇಬಲ್"],
+["Steel Stool","ಸ್ಟೀಲ್ ಸ್ಟೂಲ್"],
+["Tables","ಟೇಬಲ್‌ಗಳು"],
+["Steel Chairs","ಸ್ಟೀಲ್ ಕುರ್ಚಿಗಳು"],
+["Sofa","ಸೋಫಾ"],
+["VIP Table","ವಿ.ಐ.ಪಿ. ಟೇಬಲ್"],
+["No. 1 Plastic Chairs","ನಂ. 1 ಪ್ಲಾಸ್ಟಿಕ್ ಕುರ್ಚಿಗಳು"],
+["No. 2 Plastic Chairs","ನಂ. 2 ಪ್ಲಾಸ್ಟಿಕ್ ಕುರ್ಚಿಗಳು"],
+["Medium Chairs","ಮಧ್ಯಮ ಗಾತ್ರದ ಕುರ್ಚಿಗಳು"],
+["Small Chairs","ಸಣ್ಣ ಕುರ್ಚಿಗಳು"],
+["Cot / Bed","ಮಂಚ"],
+["Tray","ಟ್ರೇ"],
+["Buffet Tray","ಬಫೆಟ್ ಟ್ರೇ"],
+["Buckets","ಬಕೆಟ್‌ಗಳು"],
+["Bedsheets","ಬೆಡ್‌ಶೀಟ್‌ಗಳು"],
+["Serving Ladles","ಸಾರು ಬಡಿಸುವ ಸೌಟುಗಳು"],
+["Rice Serving Ladles","ಅನ್ನ ಬಡಿಸುವ ಸೌಟುಗಳು"],
+["Food Vessel Lid","ಪಾತ್ರೆಯ ಮುಚ್ಚಳ"],
+["Item 23 - verify name","ಕುರ್ಚಿ"],
+["Oil Vessel","ಎಣ್ಣೆ ಬಾಂಡಿ"],
+["Holige Serving Utensil","ಹೋಳಿಗೆ ಹಂಚು"],
+["Drum","ಡ್ರಮ್"],
+["Grinder","ಗ್ರೈಂಡರ್"],
+["Mysore Pak Tray","ಮೈಸೂರು ಪಾಕ್ ಟ್ರೇ"],
+["Large Buffet Tray","ದೊಡ್ಡ ಬಫೆಟ್ ಟ್ರೇ"],
+["Rumali Vessel - verify name","ರುಮಾಲ್ ಬಾಂಡಿ"],
+["Water Jug","ನೀರಿನ ಜಗ್"],
+["Coconut Grater","ಕಾಯಿ ತುರಿಯುವ ಸಾಧನ"],
+["Idli Stand","ಇಡ್ಲಿ ಸ್ಟ್ಯಾಂಡ್"],
+["Milk Strainer","ಹಾಲು ಜರಡಿ"],
+["Tea Flask","ಟೀ ಫ್ಲಾಸ್ಕ್"],
+["Vegetable Curry Vessel","ಪಲ್ಯದ ಪಾತ್ರೆ"],
+["Double Gas Stove","ಡಬಲ್ ಗ್ಯಾಸ್ ಒಲೆ"],
+["Single Gas Stove","ಸಿಂಗಲ್ ಗ್ಯಾಸ್ ಒಲೆ"],
+["Microphone Set","ಮೈಕ್ ಸೆಟ್"],
+["Lamp","ದೀಪ"],
+["Focus Light","ಫೋಕಸ್ ಲೈಟ್"],
+["Generator","ಜನರೇಟರ್"],
+["Moon Gate - verify name","ಮೂನ್ ಗೇಟ್"],
+["Steel Item - verify name","ಸ್ಟೀಲ್ ವಸ್ತು"],
+["Mattresses","ಹಾಸಿಗೆಗಳು"],
+["Chairs","ಕುರ್ಚಿಗಳು"],
+["Gas Stove Ring","ಗ್ಯಾಸ್ ಒಲೆ ರಿಂಗ್"]
+];
+
+const words = {
+en: {
+ owner:"Owner: Prakash G T",
+ address:"Bada, Davanagere, Karnataka",
+ list:"Available Items",
+ cart:"My Cart",
+ add:"Add to Cart",
+ added:"Added ✓",
+ qty:"Quantity",
+ remove:"Remove",
+ empty:"Your cart is empty.",
+ clear:"Clear Cart",
+ booking:"Booking Details",
+ name:"Your name *",
+ event:"Function type *",
+ date:"Event date *",
+ location:"Event location *",
+ phone:"Your phone number",
+ extra:"Other requirements",
+ send:"Send Booking on WhatsApp",
+ search:"Search items...",
+ note:"WhatsApp will open with your booking message. Review it and press Send.",
+ missing:"Please add at least one item to your cart.",
+ invalidQty:"Enter a quantity of at least 1.",
+ events:["Wedding","Engagement","death","Birthday","Religious Function","Housewarming","Other"],
+ eventValues:["Wedding","Engagement",,"Birthday","Religious Function","Housewarming","Other"],
+ locationHint:"Village / area / venue",
+ extraHint:"Any extra details",
+ bookingHeading:"BOOKING ENQUIRY",
+ customer:"Name",
+ function:"Function",
+ eventDate:"Event date",
+ eventLocation:"Event location",
+ customerPhone:"Customer phone",
+ notProvided:"Not provided",
+ selectedItems:"SELECTED ITEMS",
+ item:"Item",
+ quantity:"Quantity",
+ other:"Other requirements"
+},
+kn: {
+ owner:"ಮಾಲೀಕರು: ಪ್ರಕಾಶ್ ಜಿ. ಟಿ.",
+ address:"ಬಾಡ, ದಾವಣಗೆರೆ, ಕರ್ನಾಟಕ",
+ list:"ಲಭ್ಯವಿರುವ ವಸ್ತುಗಳು",
+ cart:"ನನ್ನ ಕಾರ್ಟ್",
+ add:"ಕಾರ್ಟ್‌ಗೆ ಸೇರಿಸಿ",
+ added:"ಸೇರಿಸಲಾಗಿದೆ ✓",
+ qty:"ಪ್ರಮಾಣ",
+ remove:"ತೆಗೆದುಹಾಕಿ",
+ empty:"ನಿಮ್ಮ ಕಾರ್ಟ್ ಖಾಲಿಯಾಗಿದೆ.",
+ clear:"ಕಾರ್ಟ್ ತೆರವುಗೊಳಿಸಿ",
+ booking:"ಬುಕಿಂಗ್ ವಿವರಗಳು",
+ name:"ನಿಮ್ಮ ಹೆಸರು *",
+ event:"ಕಾರ್ಯಕ್ರಮದ ವಿಧ *",
+ date:"ಕಾರ್ಯಕ್ರಮದ ದಿನಾಂಕ *",
+ location:"ಕಾರ್ಯಕ್ರಮದ ಸ್ಥಳ *",
+ phone:"ನಿಮ್ಮ ದೂರವಾಣಿ ಸಂಖ್ಯೆ",
+ extra:"ಹೆಚ್ಚುವರಿ ಅಗತ್ಯಗಳು",
+ send:"ವಾಟ್ಸಾಪ್ ಮೂಲಕ ಬುಕಿಂಗ್ ಕಳುಹಿಸಿ",
+ search:"ವಸ್ತುಗಳನ್ನು ಹುಡುಕಿ...",
+ note:"ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಬುಕಿಂಗ್ ಸಂದೇಶ ತೆರೆಯುತ್ತದೆ. ಪರಿಶೀಲಿಸಿ ಕಳುಹಿಸಿ.",
+ missing:"ದಯವಿಟ್ಟು ಮೊದಲು ಕಾರ್ಟ್‌ಗೆ ಕನಿಷ್ಠ ಒಂದು ವಸ್ತುವನ್ನು ಸೇರಿಸಿ.",
+ invalidQty:"ದಯವಿಟ್ಟು ಕನಿಷ್ಠ 1 ಪ್ರಮಾಣವನ್ನು ನಮೂದಿಸಿ.",
+ events:["ಮದುವೆ",  "ನಿಶ್ಚಿತಾರ್ಥ,","ಜನ್ಮದಿನ","ಧಾರ್ಮಿಕ ಕಾರ್ಯಕ್ರಮ","ಗೃಹಪ್ರವೇಶ","ಇತರೆ"],
+ eventValues:["Wedding","Engagement","Birthday","Religious Function","Housewarming","Other"],
+ locationHint:"ಗ್ರಾಮ / ಪ್ರದೇಶ / ಸ್ಥಳ",
+ extraHint:"ಹೆಚ್ಚುವರಿ ವಿವರಗಳು",
+ bookingHeading:"ಬುಕಿಂಗ್ ವಿಚಾರಣೆ",
+ customer:"ಹೆಸರು",
+ function:"ಕಾರ್ಯಕ್ರಮ",
+ eventDate:"ಕಾರ್ಯಕ್ರಮದ ದಿನಾಂಕ",
+ eventLocation:"ಕಾರ್ಯಕ್ರಮದ ಸ್ಥಳ",
+ customerPhone:"ಗ್ರಾಹಕರ ದೂರವಾಣಿ ಸಂಖ್ಯೆ",
+ notProvided:"ನಮೂದಿಸಿಲ್ಲ",
+ selectedItems:"ಆಯ್ಕೆ ಮಾಡಿದ ವಸ್ತುಗಳು",
+ item:"ವಸ್ತು",
+ quantity:"ಪ್ರಮಾಣ",
+ other:"ಹೆಚ್ಚುವರಿ ಅಗತ್ಯಗಳು"
+}
+};
+
+let cartData = {};
+let language = "en";
+const $ = id => document.getElementById(id);
+function word(key) {
+ return words[language][key];
+}
+function nameOf(i) {
+ return products[i][language === "kn" ? 1 : 0];
+}
+
+function renderItems() {
+ language = $("lang").value;
+ $("listTitle").textContent = word("list");
+ $("search").placeholder = word("search");
+
+ const root = $("items");
+ root.innerHTML = "";
+ const query = $("search").value.trim().toLowerCase();
+
+ products.forEach((p, i) => {
+  const title = nameOf(i);
+  if (query &&
+      !p[0].toLowerCase().includes(query) &&
+      !p[1].toLowerCase().includes(query)) return;
+
+  const box = document.createElement("div");
+  box.className = "item";
+
+  const name = document.createElement("div");
+  name.className = "itemname";
+  name.textContent = (i + 1) + ". " + title;
+
+  const controls = document.createElement("div");
+  controls.className = "controls";
+
+  const qty = document.createElement("input");
+  qty.type = "number";
+  qty.min = "1";
+  qty.step = "1";
+  qty.value = cartData[i]?.qty || 0;
+  qty.setAttribute("aria-label", word("qty"));
+
+  const btn = document.createElement("button");
+  btn.className = "smallbtn";
+  btn.textContent = word(cartData[i] ? "added" : "add");
+
+  btn.onclick = () => {
+   const q = Math.floor(Number(qty.value));
+   if (!Number.isFinite(q) || q < 1) {
+    alert(word("invalidQty"));
+    return;
+   }
+   cartData[i] = {qty:q};
+   renderAll();
+  };
+
+  controls.append(qty, btn);
+  box.append(name, controls);
+  root.append(box);
+ });
+}
+
+function renderCart() {
+ language = $("lang").value;
+ $("cartTitle").textContent = word("cart");
+ $("clearBtn").textContent = word("clear");
+
+ const root = $("cart");
+ root.innerHTML = "";
+ let count = 0;
+
+ Object.keys(cartData).forEach(key => {
+  const i = Number(key);
+  const entry = cartData[i];
+  count += entry.qty;
+
+  const row = document.createElement("div");
+  row.className = "cartrow";
+
+  const title = document.createElement("strong");
+  title.textContent = nameOf(i);
+
+  const detail = document.createElement("p");
+  detail.className = "muted";
+  detail.textContent = word("qty") + ": " + entry.qty;
+
+  const controls = document.createElement("div");
+  controls.className = "controls";
+
+  const minus = document.createElement("button");
+  minus.className = "smallbtn";
+  minus.textContent = "−";
+  minus.setAttribute("aria-label", language === "kn" ? "ಕಡಿಮೆ ಮಾಡಿ" : "Decrease quantity");
+  minus.onclick = () => {
+   if (entry.qty <= 1) delete cartData[i];
+   else entry.qty--;
+   renderAll();
+  };
+
+  const q = document.createElement("strong");
+  q.textContent = entry.qty;
+
+  const plus = document.createElement("button");
+  plus.className = "smallbtn";
+  plus.textContent = "+";
+  plus.setAttribute("aria-label", language === "kn" ? "ಹೆಚ್ಚಿಸಿ" : "Increase quantity");
+  plus.onclick = () => {
+   entry.qty++;
+   renderAll();
+  };
+
+  const remove = document.createElement("button");
+  remove.className = "smallbtn";
+  remove.textContent = word("remove");
+  remove.onclick = () => {
+   delete cartData[i];
+   renderAll();
+  };
+
+  controls.append(minus, q, plus, remove);
+  row.append(title, detail, controls);
+  root.append(row);
+ });
+
+ if (count === 0) root.textContent = word("empty");
+ $("cartCount").textContent = count;
+}
+
+function renderAll() {
+ language = $("lang").value;
+ document.documentElement.lang = language;
+
+ $("owner").textContent = word("owner");
+ $("address").textContent = word("address");
+ $("listTitle").textContent = word("list");
+ $("cartTitle").textContent = word("cart");
+ $("bookingTitle").textContent = word("booking");
+ $("nameLabel").textContent = word("name");
+ $("eventLabel").textContent = word("event");
+ $("dateLabel").textContent = word("date");
+ $("locationLabel").textContent = word("location");
+ $("phoneLabel").textContent = word("phone");
+ $("extraLabel").textContent = word("extra");
+ $("sendBtn").textContent = word("send");
+ $("note").textContent = word("note");
+ $("clearBtn").textContent = word("clear");
+ $("search").placeholder = word("search");
+ $("location").placeholder = word("locationHint");
+ $("extra").placeholder = word("extraHint");
+
+ const ev = $("event");
+ const old = ev.value || "Wedding";
+ ev.innerHTML = "";
+
+ word("events").forEach((label, i) => {
+  const opt = document.createElement("option");
+  opt.value = word("eventValues")[i];
+  opt.textContent = label;
+  ev.append(opt);
+ });
+ ev.value = old;
+
+ renderItems();
+ renderCart();
+}
+
+function clearCart() {
+ cartData = {};
+ renderAll();
+}
+
+$("date").min = new Date(
+ Date.now() - new Date().getTimezoneOffset() * 60000
+).toISOString().slice(0,10);
+
+$("bookingForm").addEventListener("submit", e => {
+ e.preventDefault();
+
+ if (Object.keys(cartData).length === 0) {
+  alert(word("missing"));
+  return;
+ }
+
+ const value = id => $(id).value.trim();
+ const w = word;
+
+ const lines = [
+  "Siddarameshwara Shamiyana Suppliers",
+  w("bookingHeading"),
+  w("customer") + ": " + value("name"),
+  w("function") + ": " + $("event").selectedOptions[0].textContent,
+  w("eventDate") + ": " + value("date"),
+  w("eventLocation") + ": " + value("location"),
+  w("customerPhone") + ": " + (value("phone") || w("notProvided")),
+  "",
+  w("selectedItems") + ":"
+ ];
+
+ Object.keys(cartData).forEach(key => {
+  const i = Number(key);
+  const entry = cartData[i];
+  lines.push(
+   "- " + nameOf(i) + " | " +
+   w("quantity") + ": " + entry.qty
+  );
+ });
+
+ if (value("extra")) {
+  lines.push("", w("other") + ": " + value("extra"));
+ }
+
+ lines.push("", "📞 9036015099");
+
+ window.location.href =
+  "https://wa.me/" + shopWhatsApp +
+  "?text=" + encodeURIComponent(lines.join("\n"));
+});
+
+renderAll();
+</script>
+</body>
+</html>
+<script>
+
+</script>
+</body>
+</html>
